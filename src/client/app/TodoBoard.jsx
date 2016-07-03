@@ -7,20 +7,41 @@ class TodoBoard extends React.Component {
 		super(props);
 		this.state = {
 			todoCards: [
-				'Fare la spesa',
-				'Pagare l\'affitto',
-				'Passare l\'aspirapolvere',
-				'Stirare'
+				{
+					"text" : "Fare la spesa",
+					"completed" : false
+				},
+				{
+					"text" : "Pagare l'affitto",
+					"completed" : false
+				},
+				{
+					"text" : "Passare l'aspirapolvere",
+					"completed" : false
+				}
 			]
-		}
+		};
 		this.addTodoCard = this.addTodoCard.bind(this);
 		this.renderSingleCard = this.renderSingleCard.bind(this);
 		this.removeTodoCard = this.removeTodoCard.bind(this);
+		this.updateTodoCardText = this.updateTodoCardText.bind(this);
+		this.setTodoCardCompleted = this.setTodoCardCompleted.bind(this);
 	}
 
 	addTodoCard() {
 		var todoCards = this.state.todoCards;
-		todoCards.push('New TODO');
+		todoCards.push(
+				{
+					"text" : "New TODO",
+					"completed" : false
+				}
+			);
+		this.setState({todoCards : todoCards});
+	}
+
+	updateTodoCardText(newText, i) {
+		var todoCards = this.state.todoCards;
+		todoCards[i].text = newText;
 		this.setState({todoCards : todoCards});
 	}
 
@@ -30,8 +51,21 @@ class TodoBoard extends React.Component {
 		this.setState({todoCards : todoCards});
 	}
 
+	setTodoCardCompleted(i) {
+		var todoCards = this.state.todoCards;
+		todoCards[i].completed = true;
+		this.setState({todoCards : todoCards});
+	}
+
 	renderSingleCard(item, i) {
-		return (<TodoCard onDeleteCard={this.removeTodoCard} key={i} index={i}>{item}</TodoCard>);
+		return <TodoCard 
+					key={i} index={i} 
+					completed={item.completed} 
+					onDeleteCard={this.removeTodoCard} 
+					onUpdateCardText={this.updateTodoCardText} 
+					onSetCardCompleted={this.setTodoCardCompleted}>
+					{item.text}
+				</TodoCard>
 	}
 
 	render() {
