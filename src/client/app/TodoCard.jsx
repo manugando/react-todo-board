@@ -1,4 +1,9 @@
 import React from 'react';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import {green500} from 'material-ui/styles/colors';
 
 class TodoCard extends React.Component {
 
@@ -35,7 +40,7 @@ class TodoCard extends React.Component {
 
 	updateCardText() {
 		this.setState({editing : false});
-		this.props.onUpdateCardText(this.refs.textarea.value, this.props.index);
+		this.props.onUpdateCardText(this.refs.textarea.getValue(), this.props.index);
 	}
 
 	setCardCompleted() {
@@ -44,31 +49,49 @@ class TodoCard extends React.Component {
 
 	renderNormal() {
 		return (
-			<div>
-				<h2>{this.props.children}</h2>
-				<button onClick={this.setCardCompleted}>Completed</button><button onClick={this.editCard}>Edit</button><button onClick={this.deleteCard}>Delete</button>
-			</div>
-
+			<Card className="TodoCard" >
+				<CardTitle 
+					title={this.props.children} 
+				/>
+				<CardActions>
+					<FlatButton label="Done" onTouchTap={this.setCardCompleted} />
+					<FlatButton label="Edit" onTouchTap={this.editCard} />
+					<FlatButton label="Delete" onTouchTap={this.deleteCard} />
+				</CardActions>
+			</Card>
 		);
 	}
 
 	renderCompleted() {
 		return (
-			<div>
-				<h2>{this.props.children} - COMPLETED</h2>
-				<button onClick={this.deleteCard}>Delete</button>
-			</div>
+			<Card className="TodoCard" style={{ backgroundColor : green500 }} >
+				<CardTitle 
+					title={this.props.children} 
+				/>
+				<CardActions>
+					<FlatButton label="Done" disabled={true} onTouchTap={this.setCardCompleted} />
+					<FlatButton label="Edit" disabled={true} onTouchTap={this.editCard} />
+					<FlatButton label="Delete" onTouchTap={this.deleteCard} />
+				</CardActions>
+			</Card>
 		);
 	}
 
 	renderEditing() {
 		return (
-			<div>
-				<br/>
-				<textarea ref="textarea" defaultValue={this.props.children}></textarea><br/>
-				<button onClick={this.updateCardText}>Save</button>
-			</div>
-
+			<Card className="TodoCard">
+				<CardText>
+					<TextField
+						ref="textarea"
+						defaultValue={this.props.children}
+					/>
+				</CardText>
+				<CardActions>
+					<FlatButton label="Done" onTouchTap={this.setCardCompleted} />
+					<FlatButton label="Save" onTouchTap={this.updateCardText} />
+					<FlatButton label="Delete" onTouchTap={this.deleteCard} />
+				</CardActions>
+			</Card>
 		);
 	}
 

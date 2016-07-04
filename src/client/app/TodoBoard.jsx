@@ -1,5 +1,8 @@
 import React from 'react';
 import TodoCard from './TodoCard.jsx';
+import AppBar from 'material-ui/AppBar';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 class TodoBoard extends React.Component {
 
@@ -30,7 +33,7 @@ class TodoBoard extends React.Component {
 
 	addTodoCard() {
 		var todoCards = this.state.todoCards;
-		todoCards.push(
+		todoCards.unshift(
 				{
 					"text" : "New TODO",
 					"completed" : false
@@ -58,7 +61,8 @@ class TodoBoard extends React.Component {
 	}
 
 	renderSingleCard(item, i) {
-		return <TodoCard 
+		return (
+				<TodoCard 
 					key={i} index={i} 
 					completed={item.completed} 
 					onDeleteCard={this.removeTodoCard} 
@@ -66,15 +70,27 @@ class TodoBoard extends React.Component {
 					onSetCardCompleted={this.setTodoCardCompleted}>
 					{item.text}
 				</TodoCard>
+			);
 	}
 
 	render() {
 		return (
 			<div>
-				<button onClick={this.addTodoCard}>New Todo</button>
-				{
-					this.state.todoCards.map(this.renderSingleCard)
-				}
+				<AppBar
+					title="Todo Board"
+					showMenuIconButton={false}
+					className="TodoBoardBodyHeader" />
+
+				<div className="TodoBoardBody">
+					<FloatingActionButton className="TodoBoardAddButton" onTouchTap={this.addTodoCard} >
+						<ContentAdd />
+					</FloatingActionButton>
+						<div className="TodoCardContainer">
+							{
+								this.state.todoCards.map(this.renderSingleCard)
+							}
+						</div>
+				</div>
 			</div>
 		);
 	}

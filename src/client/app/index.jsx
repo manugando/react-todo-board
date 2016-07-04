@@ -1,5 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import TodoBoard from './TodoBoard.jsx';
 
 require('./style.css');
@@ -7,12 +9,12 @@ require('./style.css');
 class App extends React.Component {
 	render () {
 		return (
-			<div>
-				<h1>React TODO Board</h1>
+			<MuiThemeProvider>
 				<TodoBoard />
-			</div>
+			</MuiThemeProvider>
 		);
 	}
 }
 
+injectTapEventPlugin();
 render(<App/>, document.getElementById('app'));

@@ -1,11 +1,35 @@
-button {
-	padding: 5px;
-	border-radius: 3px;
-	border: 2px solid #F1F1F1;
-	background-color: #F9F9F9;
-	margin: 3px;
+html, body {
+	margin: 0px;
+	padding: 0px;
 }
 
-button:hover {
-	background-color: #F1F1F1;
+.TodoBoardBodyHeader {
+	position: fixed !important;
+	top: 0;
+}
+
+.TodoBoardBody {
+	padding-top:64px;
+}
+
+.TodoBoardAddButton {
+	position: fixed;
+	z-index: 999;
+	bottom: 20px;
+	right: 20px;
+}
+
+.TodoCardContainer {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.TodoCard {
+	margin: 10px;
+}
+
+@media (max-width: 479px) {
+	.TodoCard {
+		width: 100%;
+	}
 }
